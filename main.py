@@ -68,5 +68,24 @@ class doublyLinkedList:
             self._head.setPrev(new_task)
             self._head = new_task
 
+    def showHead(self):
+        print(self._head._description)
+    
+    def showTail(self):
+        print(self._tail._description)
+
     def printDll(self):
-        pass
+        current= self._head
+        while current:
+            print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
+            current = current.getNext()
+
+ddl = doublyLinkedList()
+ddl.append('task1',4)
+ddl.append('task2',5)
+ddl.append('task1',4)
+ddl.append('task3',6)
+ddl.prepend('task0',3)
+ddl.printDll()
+ddl.showHead()
+ddl.showTail()
