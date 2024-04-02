@@ -38,6 +38,7 @@ class Task:
 
 
 class doublyLinkedList:
+
     def __init__(self):
 
         self._head: Task | None = None
@@ -66,3 +67,6 @@ class doublyLinkedList:
             new_task.setNext(self._head)
             self._head.setPrev(new_task)
             self._head = new_task
+
+    def printDll(self):
+        pass
