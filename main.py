@@ -44,6 +44,9 @@ class doublyLinkedList:
         self._head: Task | None = None
         self._tail: Task | None = None
 
+    def isEmpty(self):
+        return self._head == None
+
     def append(self, description: str, priority: int):
 
         if self._head is None:
@@ -80,12 +83,33 @@ class doublyLinkedList:
             print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
             current = current.getNext()
 
+    def pop(self):
+
+        if self.isEmpty():
+            return None
+        elif self._head is self._tail:
+            self._head = self._tail = None
+        else:
+            before_last = self._tail.getPrev()
+            before_last.setNext(None)
+            self._tail.setPrev(None)
+            task = dict(description=self._tail.getDescription(),priority=self._tail.getPriority(),completed=self._tail.getCompleted())
+            self._tail = before_last
+            return task
+
+    def removeHead(self):
+        pass
+
+
+
 ddl = doublyLinkedList()
 ddl.append('task1',4)
 ddl.append('task2',5)
-ddl.append('task1',4)
 ddl.append('task3',6)
 ddl.prepend('task0',3)
+ddl.append('task4',7)
 ddl.printDll()
 ddl.showHead()
 ddl.showTail()
+print(ddl.pop())
+ddl.printDll()
