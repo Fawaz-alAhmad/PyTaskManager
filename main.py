@@ -105,7 +105,6 @@ class doublyLinkedList:
 ddl = doublyLinkedList()
 ddl.append('task1',4)
 ddl.append('task2',5)
-ddl.append('task1',4)
 ddl.append('task3',6)
 ddl.prepend('task0',3)
 ddl.append('task4',7)
