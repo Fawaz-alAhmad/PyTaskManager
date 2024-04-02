@@ -51,13 +51,13 @@ class doublyLinkedList:
         if self._head:
             print(self._head._description)
         else:
-            print('empty')            
-    
+            print('empty')
+
     def showTail(self):
         if self._tail:
             print(self._tail._description)
         else:
-            print('empty')            
+            print('empty')
 
     def append(self, description: str, priority: int):
 
@@ -71,7 +71,7 @@ class doublyLinkedList:
             new_task.setPrev(self._tail)
             self._tail = new_task
 
-    def prepend(self,description: str, priority:int):
+    def prepend(self, description: str, priority: int):
 
         if self._head is None:
             new_task = Task(description, priority)
@@ -88,14 +88,16 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(description=self._tail.getDescription(),priority=self._tail.getPriority(),completed=self._tail.getCompleted())
+            task = dict(description=self._tail.getDescription(
+            ), priority=self._tail.getPriority(), completed=self._tail.getCompleted())
             self._head = self._tail = None
             return task
         else:
             before_last = self._tail.getPrev()
             before_last.setNext(None)
             self._tail.setPrev(None)
-            task = dict(description=self._tail.getDescription(),priority=self._tail.getPriority(),completed=self._tail.getCompleted())
+            task = dict(description=self._tail.getDescription(
+            ), priority=self._tail.getPriority(), completed=self._tail.getCompleted())
             self._tail = before_last
             return task
 
@@ -103,34 +105,44 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(description=self._head.getDescription(),priority=self._head.getPriority(),completed=self._head.getCompleted())
+            task = dict(description=self._head.getDescription(
+            ), priority=self._head.getPriority(), completed=self._head.getCompleted())
             self._head = self._tail = None
             return task
         else:
             second = self._head.getNext()
             self._head.setNext(None)
             second.setPrev(None)
-            task = dict(description=self._head.getDescription(),priority=self._head.getPriority(),completed=self._head.getCompleted())
+            task = dict(description=self._head.getDescription(
+            ), priority=self._head.getPriority(), completed=self._head.getCompleted())
             self._head = second
             return task
 
     def printDll(self):
-        current= self._head
+        current = self._head
         while current:
             print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
             current = current.getNext()
 
+    def __countTasksR(self, task: Task, count=0):
+        if not task:
+            return count
+        return self.__countTasksR(task.getNext(), count +1)
 
+    def countTasks(self):
+        return self.__countTasksR(self._head)
 
+# ^
 dll = doublyLinkedList()
-dll.prepend('task1',1)
-dll.append('task2',2)
-dll.append('task3',3)
-dll.prepend('task0',0)
-dll.append('task4',4)
+dll.prepend('task1', 1)
+dll.append('task2', 2)
+dll.append('task3', 3)
+dll.prepend('task0', 0)
+dll.append('task4', 4)
 dll.printDll()
-dll.showHead()
-dll.showTail()
+# dll.showHead()
+# dll.showTail()
 print(dll.removeHead())
 print(dll.pop())
-dll.printDll()
+# dll.printDll()
+print(dll.countTasks())
