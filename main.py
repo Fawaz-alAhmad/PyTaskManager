@@ -136,6 +136,9 @@ class doublyLinkedList:
             self._head = second
             return task
 
+    def deleteTaskByDescription(self,description:str):
+        pass
+
     def __countTasksR(self, task: Task, count=0):
         if not task:
             return count
@@ -144,25 +147,37 @@ class doublyLinkedList:
     def countTasks(self):
         return self.__countTasksR(self._head)
 
-    def findTaskById(self, id: int):
+    def findTaskByDescription(self, description: str):
 
         if self.isEmpty():
             return -1
 
         pointer = self._head
         position = 0
-        while (pointer.getId() != id and pointer.getNext()):
+        while (pointer.getDescription() != description and pointer.getNext()):
             pointer = pointer.getNext()
             position += 1
 
-        if pointer.getId() != id :
+        if pointer.getDescription() != description :
             return -1
         result = dict(position=position,
                         description=pointer.getDescription(),
                         priority=pointer.getPriority(),
                         completed=pointer.getCompleted())
         return result
-# ^
+
+
+
+
+
+
+
+
+
+
+
+
+################################## ^
 dll = doublyLinkedList()
 dll.prepend('task1', 1)
 dll.append('task2', 2)
@@ -176,4 +191,4 @@ dll.printDll()
 # print(dll.pop())
 # dll.printDll()
 print(dll.countTasks())
-print(dll.findTaskById(4))
+print(dll.findTaskByDescription('task2'))
