@@ -47,6 +47,18 @@ class doublyLinkedList:
     def isEmpty(self):
         return self._head == None
 
+    def showHead(self):
+        if self._head:
+            print(self._head._description)
+        else:
+            print('empty')            
+    
+    def showTail(self):
+        if self._tail:
+            print(self._tail._description)
+        else:
+            print('empty')            
+
     def append(self, description: str, priority: int):
 
         if self._head is None:
@@ -71,24 +83,14 @@ class doublyLinkedList:
             self._head.setPrev(new_task)
             self._head = new_task
 
-    def showHead(self):
-        print(self._head._description)
-    
-    def showTail(self):
-        print(self._tail._description)
-
-    def printDll(self):
-        current= self._head
-        while current:
-            print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
-            current = current.getNext()
-
     def pop(self):
 
         if self.isEmpty():
             return None
         elif self._head is self._tail:
+            task = dict(description=self._tail.getDescription(),priority=self._tail.getPriority(),completed=self._tail.getCompleted())
             self._head = self._tail = None
+            return task
         else:
             before_last = self._tail.getPrev()
             before_last.setNext(None)
@@ -98,18 +100,37 @@ class doublyLinkedList:
             return task
 
     def removeHead(self):
-        pass
+        if self.isEmpty():
+            return None
+        elif self._head is self._tail:
+            task = dict(description=self._head.getDescription(),priority=self._head.getPriority(),completed=self._head.getCompleted())
+            self._head = self._tail = None
+            return task
+        else:
+            second = self._head.getNext()
+            self._head.setNext(None)
+            second.setPrev(None)
+            task = dict(description=self._head.getDescription(),priority=self._head.getPriority(),completed=self._head.getCompleted())
+            self._head = second
+            return task
+
+    def printDll(self):
+        current= self._head
+        while current:
+            print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
+            current = current.getNext()
 
 
 
-ddl = doublyLinkedList()
-ddl.append('task1',4)
-ddl.append('task2',5)
-ddl.append('task3',6)
-ddl.prepend('task0',3)
-ddl.append('task4',7)
-ddl.printDll()
-ddl.showHead()
-ddl.showTail()
-print(ddl.pop())
-ddl.printDll()
+dll = doublyLinkedList()
+dll.prepend('task1',1)
+dll.append('task2',2)
+dll.append('task3',3)
+dll.prepend('task0',0)
+dll.append('task4',4)
+dll.printDll()
+dll.showHead()
+dll.showTail()
+print(dll.removeHead())
+print(dll.pop())
+dll.printDll()
