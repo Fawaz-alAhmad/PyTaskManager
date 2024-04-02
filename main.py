@@ -10,6 +10,7 @@ class Task:
         self._priority: int = priority
         self._completed: bool = False
         self._next: Task | None = None
+        self._prev: Task | None = None
 
     def getDescription(self):
         return self._description
@@ -22,9 +23,15 @@ class Task:
     
     def getNext(self):
         return self._next
+
+    def getPrev(self):
+        return self._prev
     
     def setNext(self,task):
         self._next = task
+    
+    def setPrev(self,task):
+        self._prev = task
 
     def markAsCompleted(self):
         self._completed = True        
