@@ -15,6 +15,9 @@ class Task:
     def getDescription(self):
         return self._description
 
+    def getId(self):
+        return self._task_id
+
     def getPriority(self):
         return self._priority
 
@@ -59,6 +62,13 @@ class doublyLinkedList:
         else:
             print('empty')
 
+    def printDll(self):
+        current = self._head
+        while current:
+            print(f"description: {current.getDescription()}, priority: {current.getPriority(
+            )}, id: {current.getId()} ,isCompleted: {current.getCompleted()}")
+            current = current.getNext()
+
     def append(self, description: str, priority: int):
 
         if self._head is None:
@@ -88,16 +98,20 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(description=self._tail.getDescription(
-            ), priority=self._tail.getPriority(), completed=self._tail.getCompleted())
+            task = dict(id=self._tail.getId(),
+                        description=self._tail.getDescription(),
+                        priority=self._tail.getPriority(),
+                        completed=self._tail.getCompleted())
             self._head = self._tail = None
             return task
         else:
             before_last = self._tail.getPrev()
             before_last.setNext(None)
             self._tail.setPrev(None)
-            task = dict(description=self._tail.getDescription(
-            ), priority=self._tail.getPriority(), completed=self._tail.getCompleted())
+            task = dict(id=self._tail.getId(),
+                        description=self._tail.getDescription(),
+                        priority=self._tail.getPriority(),
+                        completed=self._tail.getCompleted())
             self._tail = before_last
             return task
 
@@ -105,33 +119,49 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(description=self._head.getDescription(
-            ), priority=self._head.getPriority(), completed=self._head.getCompleted())
+            task = dict(id=self._head.getId(),
+                        description=self._head.getDescription(),
+                        priority=self._head.getPriority(),
+                        completed=self._head.getCompleted())
             self._head = self._tail = None
             return task
         else:
             second = self._head.getNext()
             self._head.setNext(None)
             second.setPrev(None)
-            task = dict(description=self._head.getDescription(
-            ), priority=self._head.getPriority(), completed=self._head.getCompleted())
+            task = dict(id=self._head.getId(),
+                        description=self._head.getDescription(),
+                        priority=self._head.getPriority(),
+                        completed=self._head.getCompleted())
             self._head = second
             return task
-
-    def printDll(self):
-        current = self._head
-        while current:
-            print(f"description: {current._description}, priority: {current._priority}, isCompleted: {current._completed}")
-            current = current.getNext()
 
     def __countTasksR(self, task: Task, count=0):
         if not task:
             return count
-        return self.__countTasksR(task.getNext(), count +1)
+        return self.__countTasksR(task.getNext(), count + 1)
 
     def countTasks(self):
         return self.__countTasksR(self._head)
 
+    def findTaskById(self, id: int):
+
+        if self.isEmpty():
+            return -1
+
+        pointer = self._head
+        position = 0
+        while (pointer.getId() != id and pointer.getNext()):
+            pointer = pointer.getNext()
+            position += 1
+
+        if pointer.getId() != id :
+            return -1
+        result = dict(position=position,
+                        description=pointer.getDescription(),
+                        priority=pointer.getPriority(),
+                        completed=pointer.getCompleted())
+        return result
 # ^
 dll = doublyLinkedList()
 dll.prepend('task1', 1)
@@ -142,7 +172,8 @@ dll.append('task4', 4)
 dll.printDll()
 # dll.showHead()
 # dll.showTail()
-print(dll.removeHead())
-print(dll.pop())
+# print(dll.removeHead())
+# print(dll.pop())
 # dll.printDll()
 print(dll.countTasks())
+print(dll.findTaskById(4))
