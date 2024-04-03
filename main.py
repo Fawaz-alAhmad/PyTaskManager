@@ -157,10 +157,25 @@ class doublyLinkedList:
                 task_to_delete.setNext(None)
                 return task_to_delete
             
-        return 'task not found!'
+        else:
+            print( 'task not found!')
     
     def removeDuplicates(self):
-        pass
+
+        if self.isEmpty():
+            return None
+        
+        seen_tasks = set()
+        current = self._head
+        while current:
+            description = current.getDescription()
+            if description in seen_tasks:
+                next_task = current.getNext()
+                self.deleteTaskByDescription(description)
+                current = next_task
+            else:
+                seen_tasks.add(description)
+                current = current.getNext()
 
     def __countTasksR(self, task: Task, count=0):
         if not task:
@@ -221,19 +236,20 @@ dll.append('task3', 3)
 dll.prepend('task0', 0)
 dll.append('task4', 4)
 dll.append('task4', 4)
-dll.printDll()
+# dll.printDll()
 # dll.showHead()
 # dll.showTail()
 # print(dll.removeHead())
 # print(dll.pop())
-print(dll.countTasks())
+# print(dll.countTasks())
 # print(dll.findTaskByDescription('task2'))
 # print(dll.retrieveSearchedTaskData('task2'))
-dll.MarkTaskAsComplete('task3')
-dll.deleteTaskByDescription('task1')
-dll.deleteTaskByDescription('task0')
-dll.deleteTaskByDescription('task2')
+# dll.MarkTaskAsComplete('task3')
+# dll.deleteTaskByDescription('task1')
+# dll.deleteTaskByDescription('task0')
+# dll.deleteTaskByDescription('task2')
 # dll.deleteTaskByDescription('task3')
 # dll.deleteTaskByDescription('task4')
-dll.deleteTaskByDescription('task4')
+dll.deleteTaskByDescription('task0')
+dll.removeDuplicates()
 dll.printDll()
