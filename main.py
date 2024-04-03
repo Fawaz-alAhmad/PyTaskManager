@@ -39,6 +39,9 @@ class Task:
     def markAsCompleted(self):
         self._completed = True
 
+    def markAsIncomplete(self):
+        self._completed = False
+
 
 class doublyLinkedList:
 
@@ -137,6 +140,26 @@ class doublyLinkedList:
             return task
 
     def deleteTaskByDescription(self,description:str):
+
+        task_to_delete = self.findTaskByDescription(description)
+
+        if task_to_delete:
+            if task_to_delete is self._head:
+                self.removeHead()
+            elif task_to_delete is self._tail:
+                self.pop()
+            else:
+                prev_task = task_to_delete.getPrev()
+                next_task = task_to_delete.getNext()
+                prev_task.setNext(next_task)
+                next_task.setPrev(prev_task)
+                task_to_delete.setPrev(None)
+                task_to_delete.setNext(None)
+                return task_to_delete
+            
+        return 'task not found!'
+    
+    def removeDuplicates(self):
         pass
 
     def __countTasksR(self, task: Task, count=0):
@@ -147,10 +170,10 @@ class doublyLinkedList:
     def countTasks(self):
         return self.__countTasksR(self._head)
 
-    def findTaskByDescription(self, description: str):
+    def findTaskByDescription(self, description: str) -> Task | None:
 
         if self.isEmpty():
-            return -1
+            return None
 
         pointer = self._head
         position = 0
@@ -159,13 +182,26 @@ class doublyLinkedList:
             position += 1
 
         if pointer.getDescription() != description :
-            return -1
-        result = dict(position=position,
-                        description=pointer.getDescription(),
+            return None
+        # return (pointer,position) #it's possible to return a tuple and access the function return by indexing
+        return pointer
+
+    def retrieveSearchedTaskData(self,description:str):
+
+        pointer = self.findTaskByDescription(description)
+        # position = self.findTaskByDescription(description)[1]
+        result = dict(description=pointer.getDescription(),
                         priority=pointer.getPriority(),
-                        completed=pointer.getCompleted())
+                        completed=pointer.getCompleted()) #position=position,
         return result
 
+    def MarkTaskAsComplete(self, description: str):
+
+        if self.findTaskByDescription(description):
+            task: Task = self.findTaskByDescription(description)
+            task.markAsCompleted()
+        return    
+        
 
 
 
@@ -184,11 +220,20 @@ dll.append('task2', 2)
 dll.append('task3', 3)
 dll.prepend('task0', 0)
 dll.append('task4', 4)
+dll.append('task4', 4)
 dll.printDll()
 # dll.showHead()
 # dll.showTail()
 # print(dll.removeHead())
 # print(dll.pop())
-# dll.printDll()
 print(dll.countTasks())
-print(dll.findTaskByDescription('task2'))
+# print(dll.findTaskByDescription('task2'))
+# print(dll.retrieveSearchedTaskData('task2'))
+dll.MarkTaskAsComplete('task3')
+dll.deleteTaskByDescription('task1')
+dll.deleteTaskByDescription('task0')
+dll.deleteTaskByDescription('task2')
+# dll.deleteTaskByDescription('task3')
+# dll.deleteTaskByDescription('task4')
+dll.deleteTaskByDescription('task4')
+dll.printDll()
