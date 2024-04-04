@@ -253,7 +253,10 @@ class doublyLinkedList:
 
     
 
+class PriorityQueue:
 
+    def __init__(self):
+        self._dll = doublyLinkedList()
 
 
 
