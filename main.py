@@ -218,6 +218,41 @@ class doublyLinkedList:
         return    
         
 
+    def addTaskByPriority(self, description: str, priority: int) -> None:
+        
+        task = Task(description, priority)
+
+        if self.isEmpty():
+            self._head = task
+            self._tail = task
+            return
+
+        if priority > self._head.getPriority():
+            task.setNext(self._head)
+            self._head.setPrev(task)
+            self._head = task
+            return
+
+        if priority < self._tail.getPriority():
+            self._tail.setNext(task)
+            task.setPrev(self._tail)
+            self._tail = task
+            return
+
+        current = self._head
+        while current.getNext() and current.getNext().getPriority() >= priority:
+            current = current.getNext()
+
+        next_task = current.getNext()
+        current.setNext(task)
+        task.setPrev(current)
+        if next_task:
+            next_task.setPrev(task)
+        else:
+            self._tail = task
+        task.setNext(next_task)
+
+    
 
 
 
@@ -230,12 +265,12 @@ class doublyLinkedList:
 
 ################################## ^
 dll = doublyLinkedList()
-dll.prepend('task1', 1)
-dll.append('task2', 2)
-dll.append('task3', 3)
-dll.prepend('task0', 0)
-dll.append('task4', 4)
-dll.append('task4', 4)
+# dll.prepend('task1', 1)
+# dll.append('task2', 2)
+# dll.append('task3', 3)
+# dll.prepend('task0', 0)
+# dll.append('task4', 4)
+# dll.append('task4', 4)
 # dll.printDll()
 # dll.showHead()
 # dll.showTail()
@@ -250,6 +285,13 @@ dll.append('task4', 4)
 # dll.deleteTaskByDescription('task2')
 # dll.deleteTaskByDescription('task3')
 # dll.deleteTaskByDescription('task4')
-dll.deleteTaskByDescription('task0')
+# dll.deleteTaskByDescription('task0')
+
+dll.addTaskByPriority('task5',1)
+dll.addTaskByPriority('task4',2)
+dll.addTaskByPriority('task3',3)
+dll.addTaskByPriority('task2',4)
+dll.addTaskByPriority('task1',5)
+
 dll.removeDuplicates()
 dll.printDll()
