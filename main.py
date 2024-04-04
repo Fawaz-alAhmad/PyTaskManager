@@ -256,9 +256,20 @@ class doublyLinkedList:
 class PriorityQueue:
 
     def __init__(self):
+
         self._dll = doublyLinkedList()
 
+    def enqueue(self,description: str,priority: int):
 
+        self._dll.addTaskByPriority(description,priority)
+
+    def dequeue(self):
+
+        self._dll.removeHead()
+
+    def displayPriorityQueue(self):
+
+        self._dll.printDll()
 
 
 
@@ -289,11 +300,17 @@ dll = doublyLinkedList()
 # dll.deleteTaskByDescription('task4')
 # dll.deleteTaskByDescription('task0')
 
-dll.addTaskByPriority('task5',1)
-dll.addTaskByPriority('task4',2)
-dll.addTaskByPriority('task3',3)
-dll.addTaskByPriority('task2',4)
-dll.addTaskByPriority('task1',5)
+# dll.addTaskByPriority('task5',1)
+# dll.addTaskByPriority('task4',2)
+# dll.addTaskByPriority('task3',3)
+# dll.addTaskByPriority('task2',4)
+# dll.addTaskByPriority('task1',5)
 
-dll.removeDuplicates()
-dll.printDll()
+# dll.removeDuplicates()
+# dll.printDll()
+
+pr = PriorityQueue()
+pr.enqueue('do homework',10)
+pr.enqueue('buy groceries',5)
+pr.enqueue('workout',7)
+pr.displayPriorityQueue()
