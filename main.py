@@ -213,13 +213,12 @@ class doublyLinkedList:
     def MarkTaskAsComplete(self, description: str):
 
         if self.findTaskByDescription(description):
-            task: Task = self.findTaskByDescription(description)
+            task = self.findTaskByDescription(description)
             task.markAsCompleted()
         return    
         
-
     def addTaskByPriority(self, description: str, priority: int) -> None:
-        
+
         task = Task(description, priority)
 
         if self.isEmpty():
