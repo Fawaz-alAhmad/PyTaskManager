@@ -204,6 +204,22 @@ class DoublyLinkedList:
             return None
         # return (pointer,position) #it's possible to return a tuple and access the function return by indexing
         return pointer
+    
+    def findTaskById(self, id: int) -> Task | None:
+
+        if self.isEmpty():
+            return None
+
+        pointer = self._head
+        position = 0
+        while (pointer.getId() != id and pointer.getNext()):
+            pointer = pointer.getNext()
+            position += 1
+
+        if pointer.getId() != id :
+            return None
+        # return (pointer,position) #it's possible to return a tuple and access the function return by indexing
+        return pointer
 
     def retrieveSearchedTaskData(self,description:str):
 
@@ -270,7 +286,7 @@ class PriorityQueue:
     def dequeue(self):
 
         self._dll.MarkTaskAsComplete(self._dll._head)
-        self._dll.removeHead()
+        return self._dll.removeHead()
 
     def displayPriorityQueue(self):
 
@@ -287,10 +303,11 @@ class Stack:
     def push(self, task: Task):
         if task and task.getCompleted():
             self._dll.append(task)
+            return True
 
     def pop(self):
         
-        self._dll.pop()           
+       return self._dll.pop()           
 
 
 
@@ -298,13 +315,34 @@ class TaskManagerClass:
     
     def __init__(self):
 
-        self._pq = PriorityQueue()
-        self._stack = Stack()
+        self.task_queue = PriorityQueue()
+        self.task_history = Stack()
 
 
+    def addTask(self,description: str, priority: int):
+
+        self.task_queue.enqueue(description, priority)
 
 
+    def findTaskById(self,id: int):
+       
+       return self.task_queue._dll.findTaskById(id)
 
+
+    def markAsCompleteAndAddHistory(self, Task) : 
+
+        done_task = self.task_queue.dequeue()
+        self.task_history.push(done_task)
+
+
+    def displayTasksByPriority(self):
+
+        self.task_queue.displayPriorityQueue()
+
+
+    def displayLastCompletedTask(self):
+
+        self.task_history.pop()
 
 
 
