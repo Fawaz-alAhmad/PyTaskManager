@@ -273,6 +273,20 @@ class PriorityQueue:
 
 
 
+class stack:
+
+    def __init__(self):
+
+        self._dll = doublyLinkedList()
+
+    def push(self,description: str, priority: int):
+        
+        self._dll.append(description,priority)     
+
+    def pop(self):
+        
+        self._dll.pop()           
+
 
 
 
