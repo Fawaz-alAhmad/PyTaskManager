@@ -101,20 +101,22 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(id=self._tail.getId(),
-                        description=self._tail.getDescription(),
-                        priority=self._tail.getPriority(),
-                        completed=self._tail.getCompleted())
+            # task = dict(id=self._head.getId(),
+            #             description=self._head.getDescription(),
+            #             priority=self._head.getPriority(),
+            #             completed=self._head.getCompleted())
+            task = self._tail
             self._head = self._tail = None
             return task
         else:
             before_last = self._tail.getPrev()
             before_last.setNext(None)
             self._tail.setPrev(None)
-            task = dict(id=self._tail.getId(),
-                        description=self._tail.getDescription(),
-                        priority=self._tail.getPriority(),
-                        completed=self._tail.getCompleted())
+            # task = dict(id=self._tail.getId(),
+            #             description=self._tail.getDescription(),
+            #             priority=self._tail.getPriority(),
+            #             completed=self._tail.getCompleted())
+            task = self._tail
             self._tail = before_last
             return task
 
@@ -122,20 +124,22 @@ class doublyLinkedList:
         if self.isEmpty():
             return None
         elif self._head is self._tail:
-            task = dict(id=self._head.getId(),
-                        description=self._head.getDescription(),
-                        priority=self._head.getPriority(),
-                        completed=self._head.getCompleted())
+            # task = dict(id=self._head.getId(),
+            #             description=self._head.getDescription(),
+            #             priority=self._head.getPriority(),
+            #             completed=self._head.getCompleted())
+            task = self._head
             self._head = self._tail = None
             return task
         else:
             second = self._head.getNext()
             self._head.setNext(None)
             second.setPrev(None)
-            task = dict(id=self._head.getId(),
-                        description=self._head.getDescription(),
-                        priority=self._head.getPriority(),
-                        completed=self._head.getCompleted())
+            # task = dict(id=self._head.getId(),
+            #             description=self._head.getDescription(),
+            #             priority=self._head.getPriority(),
+            #             completed=self._head.getCompleted())
+            task = self._head
             self._head = second
             return task
 
@@ -265,6 +269,7 @@ class PriorityQueue:
 
     def dequeue(self):
 
+        self._dll.MarkTaskAsComplete(self._dll._head)
         self._dll.removeHead()
 
     def displayPriorityQueue(self):
@@ -279,9 +284,9 @@ class stack:
 
         self._dll = doublyLinkedList()
 
-    def push(self,description: str, priority: int):
-        
-        self._dll.append(description,priority)     
+    def push(self, task: Task):
+        if task and task.getCompleted():
+            self._dll.append(task)
 
     def pop(self):
         
