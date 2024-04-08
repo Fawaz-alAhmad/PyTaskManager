@@ -43,7 +43,7 @@ class Task:
         self._completed = False
 
 
-class doublyLinkedList:
+class DoublyLinkedList:
 
     def __init__(self):
 
@@ -261,7 +261,7 @@ class PriorityQueue:
 
     def __init__(self):
 
-        self._dll = doublyLinkedList()
+        self._dll = DoublyLinkedList()
 
     def enqueue(self,description: str,priority: int):
 
@@ -278,11 +278,11 @@ class PriorityQueue:
 
 
 
-class stack:
+class Stack:
 
     def __init__(self):
 
-        self._dll = doublyLinkedList()
+        self._dll = DoublyLinkedList()
 
     def push(self, task: Task):
         if task and task.getCompleted():
@@ -294,9 +294,35 @@ class stack:
 
 
 
+class TaskManagerClass:
+    
+    def __init__(self):
+
+        self._pq = PriorityQueue()
+        self._stack = Stack()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ################################## ^
-dll = doublyLinkedList()
+dll = DoublyLinkedList()
 # dll.prepend('task1', 1)
 # dll.append('task2', 2)
 # dll.append('task3', 3)
