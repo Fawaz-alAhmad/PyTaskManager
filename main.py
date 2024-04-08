@@ -284,9 +284,9 @@ class stack:
 
         self._dll = doublyLinkedList()
 
-    def push(self,description: str, priority: int):
-        
-        self._dll.append(description,priority)
+    def push(self, task: Task):
+        if task and task.getCompleted():
+            self._dll.append(task)
 
     def pop(self):
         
